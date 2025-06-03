@@ -4,13 +4,21 @@
 
 @layer base {
     body {
-        @apply [scrollbar-color:_#cbd5e1_transparent] dark:[scrollbar-color:_#334155_transparent];
+        @apply [scrollbar-color:_#000000] dark:[scrollbar-color:_#000000];
     }
 }
 
 @layer components {
     .sidebar-group {
         @apply flex w-full flex-col gap-y-2;
+        scrollbar-width: thick;
+        /* For Webkit browsers */
+        &::-webkit-scrollbar {
+            width: 16px;
+        }
+    }
+    .sidebar-group::-webkit-scrollbar {
+        width: 40px;
     }
 
     .sidebar-group-title {

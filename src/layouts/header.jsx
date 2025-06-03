@@ -10,15 +10,19 @@ export const Header = ({ collapsed, setCollapsed }) => {
     const { theme, setTheme } = useTheme();
 
     return (
-        <header className="relative z-10 flex h-[60px] items-center justify-between bg-white px-4 shadow-md transition-colors dark:bg-slate-900">
-            <div className="flex items-center gap-x-3">
+        <header
+            className={`relative z-10 flex h-[60px] items-center justify-between bg-white px-2  transition-all dark:bg-slate-900 ${
+                collapsed ? "w-full max-w-full" : "max-w-[1250px] mx-auto"
+            }`}
+        >
+            <div className="flex items-center gap-x-2">
                 <button
                     className="btn-ghost size-10"
                     onClick={() => setCollapsed(!collapsed)}
                 >
-                    <ChevronsLeft className={collapsed && "rotate-180"} />
+                    <ChevronsLeft className={collapsed ? "rotate-180" : ""} />
                 </button>
-                <div className="input">
+                <div className="input w-[160px]">
                     <Search
                         size={20}
                         className="text-slate-300"
@@ -32,7 +36,7 @@ export const Header = ({ collapsed, setCollapsed }) => {
                     />
                 </div>
             </div>
-            <div className="flex items-center gap-x-3">
+            <div className="flex items-center gap-x-2">
                 <button
                     className="btn-ghost size-10"
                     onClick={() => setTheme(theme === "light" ? "dark" : "light")}

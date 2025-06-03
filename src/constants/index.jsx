@@ -1,11 +1,11 @@
-import { ChartColumn, Home, NotepadText, Package, PackagePlus, Settings, ShoppingBag, UserCheck, UserPlus, Users } from "lucide-react";
+import { CircleHelp, Component, BookText, Box, IdCard, Rocket, Building2, ShoppingBasket, Inbox, ChartColumn, Home, NotepadText, Package, PackagePlus, Settings, ShoppingBag, UserCheck, UserPlus, Users, FolderKanban } from "lucide-react";
 
 import ProfileImage from "@/assets/profile-image.jpg";
 import ProductImage from "@/assets/product-image.jpg";
 
 export const navbarLinks = [
     {
-        title: "Dashboard",
+        title: "",
         links: [
             {
                 label: "Dashboard",
@@ -13,65 +13,77 @@ export const navbarLinks = [
                 path: "/",
             },
             {
-                label: "Analytics",
-                icon: ChartColumn,
-                path: "/analytics",
+                label: "Kanban",
+                icon: FolderKanban,
+                path: "/",
             },
             {
-                label: "Reports",
-                icon: NotepadText,
-                path: "/reports",
+                label: "Inbox",
+                icon: Inbox,
+                path: "/",
             },
-        ],
-    },
-    {
-        title: "Customers",
-        links: [
+
             {
-                label: "Customers",
-                icon: Users,
-                path: "/customers",
+                label: "E-Commerce",
+                icon: ShoppingBasket,
+                path: "/",
             },
             {
-                label: "New customer",
-                icon: UserPlus,
-                path: "/new-customer",
+                label: "Users",
+                icon: Building2,
+                path: "/",
             },
             {
-                label: "Verified customers",
-                icon: UserCheck,
-                path: "/verified-customers",
+                label: "Pages",
+                icon: Rocket,
+                path: "/",
             },
-        ],
-    },
-    {
-        title: "Products",
-        links: [
-            {
-                label: "Products",
+
+              {
+                label: "Authentication",
                 icon: Package,
-                path: "/products",
+                path: "/",
             },
             {
-                label: "New product",
-                icon: PackagePlus,
-                path: "/new-product",
+                label: "Buy Now",
+                icon: Box,
+                path: "/",
             },
             {
-                label: "Inventory",
-                icon: ShoppingBag,
-                path: "/inventory",
+                label: "Docs",
+                icon: BookText,
+                path: "/",
+            },
+
+             {
+                label: "Components",
+                icon: Component,
+                path: "/",
+            },
+
+             {
+                label: "Help",
+                icon: CircleHelp,
+                path: "/",
             },
         ],
     },
     {
-        title: "Settings",
+        title: "",
         links: [
-            {
-                label: "Settings",
-                icon: Settings,
-                path: "/settings",
-            },
+            
+        ],
+    },
+    {
+        title: "",
+        links: [
+          
+        ],
+    },
+    {
+        title: "",
+        links: [
+           
         ],
     },
 ];
