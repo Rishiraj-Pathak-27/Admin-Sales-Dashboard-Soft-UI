@@ -14,7 +14,7 @@
     scrollbar-width: thick;
     /* For Webkit browsers */
     &::-webkit-scrollbar {
-      width: 16px;
+      display: none;
     }
   }
   .sidebar-group::-webkit-scrollbar {
