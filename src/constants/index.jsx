@@ -1,7 +1,9 @@
 import { CircleHelp, Component, BookText, Box, IdCard, Rocket, Building2, ShoppingBasket, Inbox, ChartColumn, Home, NotepadText, Package, PackagePlus, Settings, ShoppingBag, UserCheck, UserPlus, Users, FolderKanban } from "lucide-react";
 
-import ProfileImage from "@/assets/profile-image.jpg";
-import ProductImage from "@/assets/product-image.jpg";
+// import ProfileImage from "@/assets/profile-image.jpg";
+// import ProductImage from "@/assets/product-image.jpg";
+import ProfileImage from "@/assets/profile.jpg";
+import ProductImage from "@/assets/profile.jpg";
 
 export const navbarLinks = [
     {
