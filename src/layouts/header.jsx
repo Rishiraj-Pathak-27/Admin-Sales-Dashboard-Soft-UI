@@ -167,7 +167,7 @@ export const Header = ({ collapsed, setCollapsed }) => {
      
         <div className="relative" ref={appsRef}>
           <button
-            className="btn-ghost size-10 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="btn-ghost size-11 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
             onClick={() => {
               setShowApps(!showApps);
               setShowNotifications(false);
@@ -212,7 +212,7 @@ export const Header = ({ collapsed, setCollapsed }) => {
         {/* Notifications Dropdown */}
         <div className="relative" ref={notificationRef}>
           <button
-            className="btn-ghost size-10 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative"
+            className="btn-ghost size-11 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative"
             onClick={() => {
               setShowNotifications(!showNotifications);
               setShowApps(false);
