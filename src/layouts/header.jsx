@@ -1,75 +1,3 @@
-// import { useTheme } from "@/hooks/use-theme";
-
-// import { Bell, ChevronsLeft, Moon, Search, Sun } from "lucide-react";
-
-// import profileImg from "@/assets/profile.jpg";
-
-// import PropTypes from "prop-types";
-
-// export const Header = ({ collapsed, setCollapsed }) => {
-//     const { theme, setTheme } = useTheme();
-
-//     return (
-//         <header
-//             className={`relative z-10 flex h-[60px] items-center justify-between bg-white px-2  transition-all  ${
-//                 collapsed ? "w-full max-w-full" : "max-w-[1250px] mx-auto"
-//             }`}
-//         >
-//             <div className="flex items-center gap-x-2 ml-4 mt-2">
-//                 <button
-//                     className="btn-ghost size-10"
-//                     onClick={() => setCollapsed(!collapsed)}
-//                 >
-//                     <ChevronsLeft className={collapsed ? "rotate-180" : ""} />
-//                 </button>
-//                 <div className="input w-[320px] ml-4 h-10">
-//                     <Search
-//                         size={20}
-//                         className="text-slate-300"
-//                     />
-//                     <input
-//                         type="text"
-//                         name="search"
-//                         id="search"
-//                         placeholder="Search"
-//                         className="w-full bg-transparent text-slate-900 outline-0 placeholder:text-slate-300 dark:text-slate-50"
-//                     />
-//                 </div>
-//             </div>
-//             <div className="flex items-center gap-x-2">
-//                 <button
-//                     className="btn-ghost size-10"
-//                     onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-//                 >
-//                     <Sun
-//                         size={20}
-//                         className="dark:hidden"
-//                     />
-//                     <Moon
-//                         size={20}
-//                         className="hidden dark:block"
-//                     />
-//                 </button>
-//                 <button className="btn-ghost size-10">
-//                     <Bell size={20} />
-//                 </button>
-//                 <button className="size-10 overflow-hidden rounded-full">
-//                     <img
-//                         src={profileImg}
-//                         alt="profile image"
-//                         className="size-full object-cover"
-//                     />
-//                 </button>
-//             </div>
-//         </header>
-//     );
-// };
-
-// Header.propTypes = {
-//     collapsed: PropTypes.bool,
-//     setCollapsed: PropTypes.func,
-// };
-
 "use client";
 
 import { useTheme } from "@/hooks/use-theme";
@@ -92,21 +20,14 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import profileImg from "@/assets/profile.jpg";
+
 import profile1 from "@/assets/p1.png";
 import profile2 from "@/assets/p2.png";
 import profile3 from "@/assets/p3.png";
 import profile4 from "@/assets/p4.png";
 import profile5 from "@/assets/p5.png";
 
-// Mock profile image - replace with your actual image
-// If profile.jpg is in the public/assets folder, use:
 
-
-// If profile.jpg is inside src/assets, use import:
-// import profileImg from "@/assets/profile.jpg"
-
-// Mock notification data
 const notifications = [
   {
     id: 1,
@@ -179,7 +100,7 @@ export const Header = ({ collapsed, setCollapsed }) => {
   const appsRef = useRef(null);
   const profileRef = useRef(null);
 
-  // Close dropdowns when clicking outside
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -239,18 +160,11 @@ export const Header = ({ collapsed, setCollapsed }) => {
         </div>
       </div>
 
-      {/* Main right section */}
+     
       <div className="flex items-center gap-x-1 pr-4 flex-1 justify-end mt-2">
-        {/* Theme Toggle */}
-        <button
-          className="btn-ghost size-10 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        >
-          <Sun size={20} className="dark:hidden" />
-          <Moon size={20} className="hidden dark:block" />
-        </button>
+       
 
-        {/* Apps Dropdown */}
+     
         <div className="relative" ref={appsRef}>
           <button
             className="btn-ghost size-10 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
@@ -369,7 +283,7 @@ export const Header = ({ collapsed, setCollapsed }) => {
             }}
           >
             <img
-              src={profileImg || "/placeholder.svg"}
+              src={profile1 || "/placeholder.svg"}
               alt="profile image"
               className="size-full object-cover"
             />
