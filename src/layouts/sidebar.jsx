@@ -1,54 +1,54 @@
-"use client"
+"use client";
 
-import { forwardRef, useState } from "react"
-import { NavLink } from "react-router-dom"
-import { ChevronDown, ChevronRight } from "lucide-react"
+import { forwardRef, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
-import { navbarLinks } from "@/constants"
+import { navbarLinks } from "@/constants";
 
-import logo from "@/assets/logo.png"
-// import logoDark from "@/assets/logo-dark.svg"; // Uncomment and use if you have a dark logo
-import enFlag from "@/assets/3.png"
-import dsFlag from "@/assets/4.png"
-import itFlag from "@/assets/5.png"
-import chFlag from "@/assets/6.png"
+import logo from "@/assets/logo.png";
 
-import { cn } from "@/utils/cn"
+import enFlag from "@/assets/3.png";
+import dsFlag from "@/assets/4.png";
+import itFlag from "@/assets/5.png";
+import chFlag from "@/assets/6.png";
 
-import PropTypes from "prop-types"
+import { cn } from "@/utils/cn";
+
+import PropTypes from "prop-types";
 
 export const Sidebar = forwardRef(({ collapsed }, ref) => {
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
-  const [selectedLanguage, setSelectedLanguage] = useState("en")
-  const [openDropdowns, setOpenDropdowns] = useState({})
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [openDropdowns, setOpenDropdowns] = useState({});
 
   const languages = [
     { code: "en", name: "English", flag: "US" },
     { code: "es", name: "Deutsch", flag: "DE" },
     { code: "fr", name: "Italiano", flag: "IT" },
     { code: "de", name: "Chinese", flag: "CH" },
-  ]
+  ];
 
   const handleLanguageSelect = (languageCode) => {
-    setSelectedLanguage(languageCode)
-    setIsLanguageDropdownOpen(false)
-    console.log("Language changed to:", languageCode)
-  }
+    setSelectedLanguage(languageCode);
+    setIsLanguageDropdownOpen(false);
+    console.log("Language changed to:", languageCode);
+  };
 
   const handleMenuClick = () => {
-    console.log("Menu button clicked")
-  }
+    console.log("Menu button clicked");
+  };
 
   const handleSettingsClick = () => {
-    console.log("Settings button clicked")
-  }
+    console.log("Settings button clicked");
+  };
 
   const toggleDropdown = (label) => {
     setOpenDropdowns((prev) => ({
       ...prev,
       [label]: !prev[label],
-    }))
-  }
+    }));
+  };
 
   return (
     <aside
@@ -57,34 +57,52 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
         "fixed z-[100] flex h-full min-h-screen w-[300px] flex-col overflow-x-hidden border-slate-300 bg-white [transition:_width_300ms_cubic-bezier(0.4,_0,_0.2,_1),_left_300ms_cubic-bezier(0.4,_0,_0.2,_1),_background-color_150ms_cubic-bezier(0.4,_0,_0.2,_1),_border_150ms_cubic-bezier(0.4,_0,_0.2,_1)] dark:border-slate-700 dark:bg-slate-900 shadow-lg shadow-slate-200/70 dark:shadow-slate-900/50",
         collapsed ? "md:w-[90px] md:items-center" : "md:w-[275px]",
         collapsed ? "max-md:-left-full" : "max-md:left-0",
-        "gap-1",
+        "gap-1"
       )}
     >
       <div className="flex items-center gap-x-3 p-5">
-        <img src={logo || "/placeholder.svg"} alt="Logo" className="dark:hidden object-contain h-10" />
+        <img
+          src={logo || "/placeholder.svg"}
+          alt="Logo"
+          className="dark:hidden object-contain h-10"
+        />
         {!collapsed && (
-          <p className="text-lg font-bold text-slate-900 transition-colors dark:text-slate-50">Soft UI Flowbite PRO</p>
+          <p className="text-lg font-bold text-slate-900 transition-colors dark:text-slate-50">
+            Soft UI Flowbite PRO
+          </p>
         )}
       </div>
 
-      {/* Main navigation content */}
       <div className="flex-1 flex w-full flex-col gap-y-6 overflow-y-auto overflow-x-hidden p-5 [scrollbar-width:_thin]">
         {navbarLinks.map((navbarLink) => (
-          <nav key={navbarLink.title} className={cn("sidebar-group", collapsed && "md:items-center", "mb-0")}>
+          <nav
+            key={navbarLink.title}
+            className={cn(
+              "sidebar-group",
+              collapsed && "md:items-center",
+              "mb-0"
+            )}
+          >
             <div className="flex items-center">
-              <p className={cn("sidebar-group-title", collapsed && "md:w-[65px]")}>{navbarLink.title}</p>
+              <p
+                className={cn(
+                  "sidebar-group-title ",
+                  collapsed && "md:w-[65px]"
+                )}
+              >
+                {navbarLink.title}
+              </p>
             </div>
 
             {navbarLink.links.map((link) => (
               <div key={link.label} className="mb-2">
-                {/* Main navigation item */}
                 <div className="flex items-center">
                   <NavLink
                     to={link.hasDropdown ? "#" : link.path}
                     onClick={(e) => {
                       if (link.hasDropdown) {
-                        e.preventDefault()
-                        toggleDropdown(link.label)
+                        e.preventDefault();
+                        toggleDropdown(link.label);
                       }
                     }}
                     className={({ isActive }) =>
@@ -92,18 +110,28 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
                         "sidebar-item flex items-center flex-1",
                         "gap-x-5",
                         collapsed && "md:w-[65px] justify-center",
-                        isActive && !link.hasDropdown ? "font-normal" : "font-normal",
+                        isActive && !link.hasDropdown
+                          ? "font-normal"
+                          : "font-normal",
                         "transition-all duration-200 ease-in-out",
                         "hover:bg-gray-100 dark:hover:bg-gray-800",
                         "relative",
-                        "before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-lg before:scale-110 before:opacity-0 hover:before:opacity-100 before:bg-gray-100 dark:before:bg-gray-800 before:transition-all before:duration-200 before:ease-in-out",
+                        "before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-lg before:scale-110 before:opacity-0 hover:before:opacity-100 before:bg-gray-100 dark:before:bg-gray-800 before:transition-all before:duration-200 before:ease-in-out"
                       )
                     }
                   >
                     <span
-                      className="flex items-center justify-center rounded-md p-2 transition-all duration-200"
+                      className="flex items-center justify-center rounded-md p-2 transition-all duration-200 shadow-md dark:shadow-none"
                       style={{
-                        boxShadow: "0 8px 16px 0 rgba(0,0,0,0.15)",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Light theme shadow
+
+                        ...(typeof window !== "undefined" &&
+                          window.matchMedia &&
+                          window.matchMedia("(prefers-color-scheme: dark)")
+                            .matches && {
+                            boxShadow:
+                              "0 4px 12px rgba(255, 255, 255, 0.1), 0 0 8px rgba(255, 255, 255, 0.05)", // Dark theme glow
+                          }),
                       }}
                     >
                       <link.icon size={18} className="flex-shrink-0" />
@@ -111,39 +139,44 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
                     {!collapsed && <p className="flex-1">{link.label}</p>}
                   </NavLink>
 
-                  {/* Dropdown arrow */}
                   {link.hasDropdown && !collapsed && (
                     <button
                       onClick={() => toggleDropdown(link.label)}
-                      className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
+                      className="p-1 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-400 rounded transition-colors"
                     >
-                      {openDropdowns[link.label] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                      {openDropdowns[link.label] ? (
+                        <ChevronDown size={16} />
+                      ) : (
+                        <ChevronRight size={16} />
+                      )}
                     </button>
                   )}
                 </div>
 
                 {/* Submenu items */}
-                {link.hasDropdown && openDropdowns[link.label] && !collapsed && (
-                  <div className="ml-12 mt-2 space-y-1">
-                    {link.submenu?.map((subItem) => (
-                      <NavLink
-                        key={subItem.label}
-                        to={subItem.path}
-                        className={({ isActive }) =>
-                          cn(
-                            "block py-2 px-3 text-sm rounded-md transition-colors",
-                            
-                            isActive
-                              ? "bg-blue-50 dark:bg-blue-900/20 "
-                              : "text-gray-900 dark:text-gray-900",
-                          )
-                        }
-                      >
-                        {subItem.label}
-                      </NavLink>
-                    ))}
-                  </div>
-                )}
+                {link.hasDropdown &&
+                  openDropdowns[link.label] &&
+                  !collapsed && (
+                    <div className="ml-12 mt-2 space-y-1">
+                      {link.submenu?.map((subItem) => (
+                        <NavLink
+                          key={subItem.label}
+                          to={subItem.path}
+                          className={({ isActive }) =>
+                            cn(
+                              "block py-2 px-3 text-sm rounded-md transition-colors",
+
+                              isActive
+                                ? "bg-blue-50 dark:bg-blue-900/20 "
+                                : "text-gray-900 dark:text-gray-900"
+                            )
+                          }
+                        >
+                          {subItem.label}
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
               </div>
             ))}
           </nav>
@@ -154,7 +187,9 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
       <div
         className={cn(
           "border-t border-slate-200 dark:border-slate-700 p-4",
-          collapsed ? "flex flex-col items-center gap-3" : "flex items-center justify-center gap-6",
+          collapsed
+            ? "flex flex-col items-center gap-3"
+            : "flex items-center justify-center gap-6"
         )}
       >
         {/* Menu/Hamburger Button */}
@@ -163,7 +198,13 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
           className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 shadow-sm"
           title="Menu"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M3 12H21M3 6H21M3 18H21"
               stroke="currentColor"
@@ -180,7 +221,13 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
           className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 shadow-sm"
           title="Settings"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
               stroke="currentColor"
@@ -205,7 +252,10 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
             className="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 shadow-sm"
             title="Language"
           >
-            <span className="text-lg">{languages.find((lang) => lang.code === selectedLanguage)?.flag || "🇺🇸"}</span>
+            <span className="text-lg">
+              {languages.find((lang) => lang.code === selectedLanguage)?.flag ||
+                "🇺🇸"}
+            </span>
           </button>
 
           {/* Language Dropdown */}
@@ -213,12 +263,12 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
             <div className="absolute bottom-full left-[-106px] mb-2 w-40 rounded-md shadow-lg text-center bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 z-50">
               <div className="py-1">
                 {languages.map((language) => {
-                  let imgSrc
-                  if (language.code === "en") imgSrc = enFlag
-                  else if (language.code === "es") imgSrc = dsFlag
-                  else if (language.code === "fr") imgSrc = itFlag
-                  else if (language.code === "de") imgSrc = chFlag
-                  else imgSrc = `/flags/${language.code}.svg`
+                  let imgSrc;
+                  if (language.code === "en") imgSrc = enFlag;
+                  else if (language.code === "es") imgSrc = dsFlag;
+                  else if (language.code === "fr") imgSrc = itFlag;
+                  else if (language.code === "de") imgSrc = chFlag;
+                  else imgSrc = `/flags/${language.code}.svg`;
 
                   return (
                     <button
@@ -228,7 +278,7 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
                         "flex items-center w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors",
                         selectedLanguage === language.code
                           ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
-                          : "text-gray-700 dark:text-gray-200",
+                          : "text-gray-700 dark:text-gray-200"
                       )}
                     >
                       <img
@@ -240,7 +290,7 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
                       <span className="mr-3 text-lg">{language.flag}</span>
                       <span>{language.name}</span>
                     </button>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -248,11 +298,11 @@ export const Sidebar = forwardRef(({ collapsed }, ref) => {
         </div>
       </div>
     </aside>
-  )
-})
+  );
+});
 
-Sidebar.displayName = "Sidebar"
+Sidebar.displayName = "Sidebar";
 
 Sidebar.propTypes = {
   collapsed: PropTypes.bool,
-}
+};

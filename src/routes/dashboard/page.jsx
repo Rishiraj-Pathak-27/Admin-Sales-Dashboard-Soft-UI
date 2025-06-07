@@ -1,41 +1,41 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { DollarSign, ArrowUp, ArrowDown, ShoppingCart, Earth, User, ChevronDown, ChevronRight, X } from "lucide-react"
-import dynamic from "next/dynamic"
-import flag1 from "@/assets/3.png"
-import flag2 from "@/assets/7.png"
-import flag3 from "@/assets/8.png"
-import flag4 from "@/assets/9.png"
-import flag5 from "@/assets/5.png"
-import flag6 from "@/assets/11.png"
-import flag7 from "@/assets/12.png"
+import { useState, useRef, useEffect } from "react";
+import BarChartComponent from "../../Components/Bar-Chart";
+import MapChart from "../../Components/Heat-Map";
+import PieChartComponent from "../../Components/Pie-Chart";
 
-import profile1 from "@/assets/p6.png"
-import profile2 from "@/assets/p3.png"
-import profile3 from "@/assets/p7.png"
-import profile4 from "@/assets/p8.png"
-import profile5 from "@/assets/p9.png"
-import profile6 from "@/assets/p10.png"
-import profile7 from "@/assets/p11.png"
-import profile8 from "@/assets/p12.png"
-import profile9 from "@/assets/p13.png"
+import {
+  DollarSign,
+  ArrowUp,
+  ArrowDown,
+  ShoppingCart,
+  Earth,
+  User,
+  ChevronDown,
+  ChevronRight,
+  X,
+} from "lucide-react";
+import dynamic from "next/dynamic";
+import flag1 from "@/assets/3.png";
+import flag2 from "@/assets/7.png";
+import flag3 from "@/assets/8.png";
+import flag4 from "@/assets/9.png";
+import flag5 from "@/assets/5.png";
+import flag6 from "@/assets/11.png";
+import flag7 from "@/assets/12.png";
 
+import profile1 from "@/assets/p6.png";
+import profile2 from "@/assets/p3.png";
+import profile3 from "@/assets/p7.png";
+import profile4 from "@/assets/p8.png";
+import profile5 from "@/assets/p9.png";
+import profile6 from "@/assets/p10.png";
+import profile7 from "@/assets/p11.png";
+import profile8 from "@/assets/p12.png";
+import profile9 from "@/assets/p13.png";
 
-// Dynamically import Plotly to avoid SSR issues
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false })
-
-// Bar chart data for the week with background values
-const weeklyData = [
-  { day: "01", value: 2000, background: 5000 },
-  { day: "02", value: 3500, background: 5000 },
-  { day: "03", value: 4200, background: 5000 },
-  { day: "04", value: 2800, background: 5000 },
-  { day: "05", value: 4800, background: 5000 },
-  { day: "06", value: 3200, background: 5000 },
-  { day: "07", value: 3800, background: 5000 },
-]
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
 // Sales by country data with flag images
 const salesByCountryData = [
@@ -81,7 +81,7 @@ const salesByCountryData = [
     sales: 300,
     value: "$7,200",
   },
-]
+];
 
 // User signups data
 const userSignupsData = [
@@ -189,7 +189,7 @@ const userSignupsData = [
     department: "Operations",
     company: "123456",
   },
-]
+];
 
 // Country session data for choropleth map
 const countrySessionData = [
@@ -205,7 +205,7 @@ const countrySessionData = [
   { country: "China", code: "CHN", sessions: 30000, change: "+6%" },
   { country: "Russia", code: "RUS", sessions: 17000, change: "+2%" },
   { country: "Mexico", code: "MEX", sessions: 9000, change: "+4%" },
-]
+];
 
 // Latest customers data
 const latestCustomersData = [
@@ -272,20 +272,17 @@ const latestCustomersData = [
     avatar: profile6,
     amount: "$367",
   },
-]
-
-// Acquisition overview data
-const acquisitionData = [
-  { name: "Organic Search", users: 5649, percentage: 30, color: "#06b6d4" },
-  { name: "Referral", users: 4025, percentage: 24, color: "#3b82f6" },
-  { name: "Direct", users: 3105, percentage: 18, color: "#06b6d4" },
-  { name: "Social", users: 1251, percentage: 12, color: "#ec4899" },
-  { name: "Other", users: 734, percentage: 9, color: "#8b5cf6" },
-  { name: "Email", users: 456, percentage: 7, color: "#1f2937" },
-]
+];
 
 // Time period options for dropdown
-const timePeriodOptions = ["Yesterday", "Today", "Last 7 days", "Last 30 days", "Last 90 days", "Custom..."]
+const timePeriodOptions = [
+  "Yesterday",
+  "Today",
+  "Last 7 days",
+  "Last 30 days",
+  "Last 90 days",
+  "Custom...",
+];
 
 // Edit User Modal Component
 const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
@@ -298,7 +295,7 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
     company: "",
     currentPassword: "",
     newPassword: "",
-  })
+  });
 
   useEffect(() => {
     if (user) {
@@ -311,34 +308,39 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
         company: user.company || "",
         currentPassword: "",
         newPassword: "",
-      })
+      });
     }
-  }, [user])
+  }, [user]);
 
   const handleInputChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
-  const handleSave = () => {
-    onSave({ ...user, ...formData })
-    onClose()
-  }
+  const handleSave = () => {  
+    onSave({ ...user, ...formData });
+    onClose();
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-2xl p-8 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-gray-900">Edit user</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors"
+          >
             <X size={24} />
           </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              First Name
+            </label>
             <input
               type="text"
               value={formData.firstName}
@@ -349,7 +351,9 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Last Name
+            </label>
             <input
               type="text"
               value={formData.lastName}
@@ -360,7 +364,9 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
             <input
               type="email"
               value={formData.email}
@@ -371,7 +377,9 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Phone Number
+            </label>
             <input
               type="tel"
               value={formData.phone}
@@ -382,7 +390,9 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Department</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Department
+            </label>
             <input
               type="text"
               value={formData.department}
@@ -393,7 +403,9 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Company
+            </label>
             <input
               type="text"
               value={formData.company}
@@ -404,18 +416,24 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Current Password
+            </label>
             <input
               type="password"
               value={formData.currentPassword}
-              onChange={(e) => handleInputChange("currentPassword", e.target.value)}
+              onChange={(e) =>
+                handleInputChange("currentPassword", e.target.value)
+              }
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
               placeholder="••••••••"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              New Password
+            </label>
             <input
               type="password"
               value={formData.newPassword}
@@ -436,24 +454,24 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default function Component() {
-  const [chartTimeframe, setChartTimeframe] = useState("Last 7 days")
-  const [countryTimeframe, setCountryTimeframe] = useState("Last 7 days")
-  const [sessionsTimeframe, setSessionsTimeframe] = useState("Last 7 days")
-  const [isChartDropdownOpen, setIsChartDropdownOpen] = useState(false)
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false)
-  const [isSessionsDropdownOpen, setIsSessionsDropdownOpen] = useState(false)
+  const [chartTimeframe, setChartTimeframe] = useState("Last 7 days");
+  const [countryTimeframe, setCountryTimeframe] = useState("Last 7 days");
+  const [sessionsTimeframe, setSessionsTimeframe] = useState("Last 7 days");
+  const [isChartDropdownOpen, setIsChartDropdownOpen] = useState(false);
+  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+  const [isSessionsDropdownOpen, setIsSessionsDropdownOpen] = useState(false);
   const [selectedMapCountry, setSelectedMapCountry] = useState({
     code: "BRA",
     name: "Brazil",
     sessions: 40016,
     change: "+5%",
-  })
-  const [editingUser, setEditingUser] = useState(null)
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  });
+  const [editingUser, setEditingUser] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [mapLayout, setMapLayout] = useState({
     geo: {
       showframe: false,
@@ -470,86 +488,111 @@ export default function Component() {
     width: 600,
     height: 300,
     autosize: true,
-  })
+  });
 
-  const [latestCustomersTimeframe, setLatestCustomersTimeframe] = useState("Last 7 days")
-  const [acquisitionTimeframe, setAcquisitionTimeframe] = useState("Last 7 days")
-  const [isLatestCustomersDropdownOpen, setIsLatestCustomersDropdownOpen] = useState(false)
-  const [isAcquisitionDropdownOpen, setIsAcquisitionDropdownOpen] = useState(false)
+  const [latestCustomersTimeframe, setLatestCustomersTimeframe] =
+    useState("Last 7 days");
+  const [acquisitionTimeframe, setAcquisitionTimeframe] =
+    useState("Last 7 days");
+  const [isLatestCustomersDropdownOpen, setIsLatestCustomersDropdownOpen] =
+    useState(false);
+  const [isAcquisitionDropdownOpen, setIsAcquisitionDropdownOpen] =
+    useState(false);
 
-  const chartDropdownRef = useRef(null)
-  const countryDropdownRef = useRef(null)
-  const sessionsDropdownRef = useRef(null)
-  const plotContainerRef = useRef(null)
-  const [isUserSignupsDropdownOpen, setIsUserSignupsDropdownOpen] = useState(false)
-  const userSignupsDropdownRef = useRef(null)
+  const chartDropdownRef = useRef(null);
+  const countryDropdownRef = useRef(null);
+  const sessionsDropdownRef = useRef(null);
+  const plotContainerRef = useRef(null);
+  const [isUserSignupsDropdownOpen, setIsUserSignupsDropdownOpen] =
+    useState(false);
+  const userSignupsDropdownRef = useRef(null);
 
-  const latestCustomersDropdownRef = useRef(null)
-  const acquisitionDropdownRef = useRef(null)
+  const latestCustomersDropdownRef = useRef(null);
+  const acquisitionDropdownRef = useRef(null);
 
   // Adjust map size on window resize
   useEffect(() => {
     const handleResize = () => {
       if (plotContainerRef.current) {
-        const width = plotContainerRef.current.clientWidth
-        const height = plotContainerRef.current.clientHeight
+        const width = plotContainerRef.current.clientWidth;
+        const height = plotContainerRef.current.clientHeight;
         setMapLayout((prev) => ({
           ...prev,
           width,
           height,
-        }))
+        }));
       }
-    }
+    };
 
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
-      if (chartDropdownRef.current && !chartDropdownRef.current.contains(event.target)) {
-        setIsChartDropdownOpen(false)
+      if (
+        chartDropdownRef.current &&
+        !chartDropdownRef.current.contains(event.target)
+      ) {
+        setIsChartDropdownOpen(false);
       }
-      if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target)) {
-        setIsCountryDropdownOpen(false)
+      if (
+        countryDropdownRef.current &&
+        !countryDropdownRef.current.contains(event.target)
+      ) {
+        setIsCountryDropdownOpen(false);
       }
-      if (sessionsDropdownRef.current && !sessionsDropdownRef.current.contains(event.target)) {
-        setIsSessionsDropdownOpen(false)
+      if (
+        sessionsDropdownRef.current &&
+        !sessionsDropdownRef.current.contains(event.target)
+      ) {
+        setIsSessionsDropdownOpen(false);
       }
-      if (userSignupsDropdownRef.current && !userSignupsDropdownRef.current.contains(event.target)) {
-        setIsUserSignupsDropdownOpen(false)
+      if (
+        userSignupsDropdownRef.current &&
+        !userSignupsDropdownRef.current.contains(event.target)
+      ) {
+        setIsUserSignupsDropdownOpen(false);
       }
-      if (latestCustomersDropdownRef.current && !latestCustomersDropdownRef.current.contains(event.target)) {
-        setIsLatestCustomersDropdownOpen(false)
+      if (
+        latestCustomersDropdownRef.current &&
+        !latestCustomersDropdownRef.current.contains(event.target)
+      ) {
+        setIsLatestCustomersDropdownOpen(false);
       }
-      if (acquisitionDropdownRef.current && !acquisitionDropdownRef.current.contains(event.target)) {
-        setIsAcquisitionDropdownOpen(false)
+      if (
+        acquisitionDropdownRef.current &&
+        !acquisitionDropdownRef.current.contains(event.target)
+      ) {
+        setIsAcquisitionDropdownOpen(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleEditUser = (user) => {
-    setEditingUser(user)
-    setIsEditModalOpen(true)
-  }
+    setEditingUser(user);
+    setIsEditModalOpen(true);
+  };
 
   const handleSaveUser = (updatedUser) => {
     // Here you would typically update the user in your data source
-    console.log("Saving user:", updatedUser)
-  }
+    console.log("Saving user:", updatedUser);
+  };
 
   const handleCountrySelect = (data) => {
     if (data && data.points && data.points[0]) {
-      const point = data.points[0]
-      const countryCode = point.location
-      const countryData = countrySessionData.find((c) => c.code === countryCode)
+      const point = data.points[0];
+      const countryCode = point.location;
+      const countryData = countrySessionData.find(
+        (c) => c.code === countryCode
+      );
 
       if (countryData) {
         setSelectedMapCountry({
@@ -557,10 +600,10 @@ export default function Component() {
           name: countryData.country,
           sessions: countryData.sessions,
           change: countryData.change,
-        })
+        });
       }
     }
-  }
+  };
 
   // Prepare data for Plotly choropleth map
   const mapData = [
@@ -569,7 +612,9 @@ export default function Component() {
       locationmode: "ISO-3",
       locations: countrySessionData.map((item) => item.code),
       z: countrySessionData.map((item) => item.sessions),
-      text: countrySessionData.map((item) => `${item.country}: ${item.sessions.toLocaleString()} sessions`),
+      text: countrySessionData.map(
+        (item) => `${item.country}: ${item.sessions.toLocaleString()} sessions`
+      ),
       colorscale: [
         [0, "#f9a8d4"],
         [0.2, "#f472b6"],
@@ -596,32 +641,7 @@ export default function Component() {
       },
       hoverinfo: "text",
     },
-  ]
-
-  // Prepare data for Plotly pie chart
-  const acquisitionPieData = [
-    {
-      type: "pie",
-      values: acquisitionData.map((item) => item.percentage),
-      labels: acquisitionData.map((item) => item.name),
-      textinfo: "none",
-      hoverinfo: "label+percent",
-      marker: {
-        colors: acquisitionData.map((item) => item.color),
-      },
-      hole: 0.4,
-    },
-  ]
-
-  const acquisitionPieLayout = {
-    showlegend: false,
-    margin: { t: 0, r: 0, b: 0, l: 0 },
-    paper_bgcolor: "rgba(0,0,0,0)",
-    plot_bgcolor: "rgba(0,0,0,0)",
-    autosize: true,
-    height: 240,
-    width: 240,
-  }
+  ];
 
   return (
     <div className="flex flex-col gap-y-6 ml-8 -mt-12 max-w-[1300px] px-1 bg-white min-h-screen py-8">
@@ -638,7 +658,9 @@ export default function Component() {
                 <p className="text-2xl font-bold text-gray-900">$3,600</p>
                 <div className="flex items-center gap-0 ml-9 mt-1">
                   <ArrowUp size={20} className="text-green-500" />
-                  <span className="text-xl font-medium text-green-500">+16%</span>
+                  <span className="text-xl font-medium text-green-500">
+                    +16%
+                  </span>
                 </div>
               </div>
               <p className="text-sm text-gray-500 ">Today's Money</p>
@@ -648,10 +670,10 @@ export default function Component() {
 
         {/* Hide scrollbar globally except where we want it */}
         <style jsx global>{`
-          
-          html, body {
-            scrollbar-width:  !important;
-            -ms-overflow-style:  !important;
+          html,
+          body {
+            scrollbar-width: !important;
+            -ms-overflow-style: !important;
           }
           ::-webkit-scrollbar {
             display: none !important;
@@ -688,7 +710,9 @@ export default function Component() {
                 <p className="text-2xl font-bold text-gray-900">2,300</p>
                 <div className="flex items-center gap-0 ml-9 mt-1">
                   <ArrowUp size={20} className="text-green-500" />
-                  <span className="text-xl font-medium text-green-500">+3%</span>
+                  <span className="text-xl font-medium text-green-500">
+                    +3%
+                  </span>
                 </div>
               </div>
               <p className="text-sm text-gray-500">Today's Users</p>
@@ -726,7 +750,9 @@ export default function Component() {
                 <p className="text-2xl font-bold text-gray-900">$83,430</p>
                 <div className="flex items-center gap-0 ml-1 mt-1">
                   <ArrowUp size={20} className="text-green-500" />
-                  <span className="text-xl font-medium text-green-500">+5.34%</span>
+                  <span className="text-xl font-medium text-green-500">
+                    +5.34%
+                  </span>
                 </div>
               </div>
               <p className="text-sm text-gray-500">Sales</p>
@@ -737,91 +763,34 @@ export default function Component() {
 
       {/* First Row: Bar Chart and Sales by Country */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
-        {/* Bar Chart Section - Two-toned bars */}
-        <div className="lg:col-span-2 bg-slate-800 rounded-2xl p-6 text-white">
-          <div className="flex items-center justify-between mb-10">
-            <div>
-              <h2 className="text-3xl font-bold text-white">$45,385</h2>
-              <p className="text-slate-300 text-sm">Sales this week</p>
-            </div>
-            <div className="flex items-center gap-1 -mt-5">
-              <ArrowUp size={22} className="text-green-400" />
-              <span className="text-green-400 text-xl">12.5%</span>
-            </div>
-          </div>
-
-          <div className="h-96 mb-6 relative">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={weeklyData} margin={{ top: 0, right: 30, left: 20, bottom: -10 }}>
-                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={true} />
-                <YAxis hide />
-                <Tooltip
-                  cursor={{ fill: "rgba(255, 255, 255, 0.1)" }}
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "none",
-                    borderRadius: "8px",
-                    color: "white",
-                  }}
-                  formatter={(value, name) => [value, "Users"]}
-                  labelFormatter={(label) => `${label} Feb`}
-                />
-                {/* Background bars (gray) */}
-                <Bar dataKey="background" fill="#64748b" radius={[6, 6, 6, 6]} maxBarSize={18} />
-                {/* Foreground bars (pink) */}
-                <Bar dataKey="value" fill="#C400A3" radius={[8, 8, 8, 8]} maxBarSize={18} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Bottom section with dropdown */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-600">
-            <div className="relative" ref={chartDropdownRef}>
-              <button
-                onClick={() => setIsChartDropdownOpen(!isChartDropdownOpen)}
-                className="flex items-center gap-2 mt-2 text-slate-300 hover:text-white transition-colors duration-200"
-              >
-                <span className="text-sm mb-1">{chartTimeframe}</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-
-              {isChartDropdownOpen && (
-                <div className="absolute bottom-full mb-2 left-0 mt-0 bg-slate-700 rounded-lg shadow-lg py-1 z-10 w-40">
-                  {timePeriodOptions.map((option, index) => (
-                    <div
-                      key={index}
-                      className="px-4 py-2 text-sm text-slate-300 hover:bg-slate-600 hover:text-white cursor-pointer transition-colors duration-150"
-                      onClick={() => {
-                        setChartTimeframe(option)
-                        setIsChartDropdownOpen(false)
-                      }}
-                    >
-                      {option}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="flex items-center gap-2 text-white hover:bg-slate-700 cursor-pointer transition-all duration-200 px-3 py-2 rounded-lg">
-              <span className="text-sm font-medium">SALES REPORT</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-        </div>
+        {/*Bar Chart Section*/}
+        <BarChartComponent />
 
         {/* Sales by Country Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold text-gray-900">Sales by Country</h3>
-            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">View all</button>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Sales by Country
+            </h3>
+            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+              View all
+            </button>
           </div>
-          <p className="text-sm text-gray-500 mb-6">This is a list of latest country</p>
+          <p className="text-sm text-gray-500 mb-6">
+            This is a list of latest country
+          </p>
 
           {/* Table Headers */}
           <div className="grid grid-cols-3 gap-4 mb-4 pb-3 border-b border-gray-200">
-            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider">COUNTRY</div>
-            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider text-center">SALES</div>
-            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider text-center">VALUE</div>
+            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              COUNTRY
+            </div>
+            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider text-center">
+              SALES
+            </div>
+            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider text-center">
+              VALUE
+            </div>
           </div>
 
           {/* Country Data */}
@@ -842,8 +811,12 @@ export default function Component() {
                   </div>
                   <div className="text-sm text-gray-900">{item.country}</div>
                 </div>
-                <div className="text-center text-sm font-bold text-gray-900">{item.sales.toLocaleString()}</div>
-                <div className="text-center text-sm font-bold text-gray-900">{item.value}</div>
+                <div className="text-center text-sm font-bold text-gray-900">
+                  {item.sales.toLocaleString()}
+                </div>
+                <div className="text-center text-sm font-bold text-gray-900">
+                  {item.value}
+                </div>
               </div>
             ))}
           </div>
@@ -866,8 +839,8 @@ export default function Component() {
                       key={index}
                       className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                       onClick={() => {
-                        setCountryTimeframe(option)
-                        setIsCountryDropdownOpen(false)
+                        setCountryTimeframe(option);
+                        setIsCountryDropdownOpen(false);
                       }}
                     >
                       {option}
@@ -889,22 +862,40 @@ export default function Component() {
         {/* User Signups Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xl font-semibold text-gray-900">User Signups</h3>
-            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">View all</button>
+            <h3 className="text-xl font-semibold text-gray-900">
+              User Signups
+            </h3>
+            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+              View all
+            </button>
           </div>
-          <p className="text-sm text-gray-500 mb-8">This is a list of latest users</p>
+          <p className="text-sm text-gray-500 mb-8">
+            This is a list of latest users
+          </p>
 
           {/* Table with horizontal scroll */}
           <div className="overflow-x-auto allow-scroll">
             <div className="min-w-[800px]">
               {/* Table Headers */}
               <div className="grid grid-cols-6 gap-4 mb-1 pb-3 border-b border-gray-300">
-                <div className="text-xs font-medium text-gray-400 ml-8 uppercase tracking-wider">NAME</div>
-                <div className="text-xs font-medium text-gray-400 ml-10 uppercase tracking-wider">EMAIL</div>
-                <div className="text-xs font-medium text-gray-400 uppercase ml-8 tracking-wider">COUNTRY</div>
-                <div className="text-xs font-medium text-gray-400 uppercase ml-2 tracking-wider">ROLE</div>
-                <div className="text-xs font-medium text-gray-400 -ml-6 uppercase tracking-wider">STATUS</div>
-                <div className="text-xs font-medium text-gray-400 -ml-6 uppercase tracking-wider">EDIT</div>
+                <div className="text-xs font-medium text-gray-400 ml-8 uppercase tracking-wider">
+                  NAME
+                </div>
+                <div className="text-xs font-medium text-gray-400 ml-10 uppercase tracking-wider">
+                  EMAIL
+                </div>
+                <div className="text-xs font-medium text-gray-400 uppercase ml-8 tracking-wider">
+                  COUNTRY
+                </div>
+                <div className="text-xs font-medium text-gray-400 uppercase ml-2 tracking-wider">
+                  ROLE
+                </div>
+                <div className="text-xs font-medium text-gray-400 -ml-6 uppercase tracking-wider">
+                  STATUS
+                </div>
+                <div className="text-xs font-medium text-gray-400 -ml-6 uppercase tracking-wider">
+                  EDIT
+                </div>
               </div>
 
               {/* User Data */}
@@ -927,12 +918,18 @@ export default function Component() {
                       </span>
                     </div>
                     <div className="text-sm text-gray-500">{user.email}</div>
-                    <div className="text-sm font-medium ml-5 text-gray-900">{user.country}</div>
-                    <div className="text-sm font-medium text-gray-900">{user.role}</div>
+                    <div className="text-sm font-medium ml-5 text-gray-900">
+                      {user.country}
+                    </div>
+                    <div className="text-sm font-medium text-gray-900">
+                      {user.role}
+                    </div>
                     <div>
                       <span
                         className={`px-3 py-1 rounded-full text-xs -ml-12 font-bold uppercase tracking-wider ${
-                          user.status === "COMPLETED" ? "bg-green-100 text-green-800" : "bg-pink-100 text-pink-800"
+                          user.status === "COMPLETED"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-pink-100 text-pink-800"
                         }`}
                       >
                         {user.status}
@@ -943,7 +940,13 @@ export default function Component() {
                         onClick={() => handleEditUser(user)}
                         className="flex items-center -ml-12 gap-2 px-3 py-2 bg-gray-800 text-white rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
                       >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
                           <path
                             d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
                             stroke="currentColor"
@@ -976,7 +979,9 @@ export default function Component() {
             <div className="flex items-center gap-4">
               <div className="relative" ref={userSignupsDropdownRef}>
                 <button
-                  onClick={() => setIsUserSignupsDropdownOpen(!isUserSignupsDropdownOpen)}
+                  onClick={() =>
+                    setIsUserSignupsDropdownOpen(!isUserSignupsDropdownOpen)
+                  }
                   className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
                 >
                   <span className="text-sm">Last 7 days</span>
@@ -993,7 +998,7 @@ export default function Component() {
                         key={index}
                         className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                         onClick={() => {
-                          setIsUserSignupsDropdownOpen(false)
+                          setIsUserSignupsDropdownOpen(false);
                         }}
                       >
                         {option}
@@ -1013,55 +1018,30 @@ export default function Component() {
         {/* Sessions by Country Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold text-gray-900">Sessions by country</h3>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Sessions by country
+            </h3>
           </div>
-          <p className="text-sm text-gray-500 mb-6">View website visitors by hovering over the map</p>
+          <p className="text-sm text-gray-500 mb-6">
+            View website visitors by hovering over the map
+          </p>
 
           {/* Plotly Choropleth Map Container */}
-          <div className="relative bg-gray-50 rounded-lg p-4 mb-6 h-96" ref={plotContainerRef}>
-            {typeof window !== "undefined" && (
-              <Plot
-                data={mapData}
-                layout={mapLayout}
-                config={{
-                  displayModeBar: true,
-                  responsive: true,
-                }}
-                style={{ width: "100%", height: "100%" }}
-                useResizeHandler={true}
-                onClick={handleCountrySelect}
-              />
-            )}
-
-            {/* Country Info Overlay */}
-            <div className="absolute top-48 left-1 bg-white rounded-lg shadow-lg p-4 border max-w-xs z-10">
-              <div className="flex items-center gap-2 mb-2">
-                <div
-                  className="w-6 h-4 rounded-sm flex items-center justify-center text-white text-xs font-bold"
-                  style={{ backgroundColor: "#ec4899" }}
-                >
-                  {selectedMapCountry.code.substring(0, 2)}
-                </div>
-                <span className="font-medium text-gray-900">{selectedMapCountry.name}</span>
-              </div>
-              <div className="space-y-1">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Visitors:</span>
-                  <span className="font-bold text-gray-900">{selectedMapCountry.sessions.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Change:</span>
-                  <span className="font-bold text-gray-900">{selectedMapCountry.change}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <MapChart
+            mapData={mapData}
+            mapLayout={mapLayout}
+            selectedMapCountry={selectedMapCountry}
+            handleCountrySelect={handleCountrySelect}
+            plotContainerRef={plotContainerRef}
+          />
 
           {/* Bottom section */}
           <div className="flex items-center justify-between pt-4 border-t border-gray-200">
             <div className="relative" ref={sessionsDropdownRef}>
               <button
-                onClick={() => setIsSessionsDropdownOpen(!isSessionsDropdownOpen)}
+                onClick={() =>
+                  setIsSessionsDropdownOpen(!isSessionsDropdownOpen)
+                }
                 className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
               >
                 <span className="text-sm">{sessionsTimeframe}</span>
@@ -1075,8 +1055,8 @@ export default function Component() {
                       key={index}
                       className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                       onClick={() => {
-                        setSessionsTimeframe(option)
-                        setIsSessionsDropdownOpen(false)
+                        setSessionsTimeframe(option);
+                        setIsSessionsDropdownOpen(false);
                       }}
                     >
                       {option}
@@ -1098,14 +1078,21 @@ export default function Component() {
         {/* Latest Customers Section */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xl font-semibold text-gray-900">Latest Customers</h3>
-            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">View all</button>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Latest Customers
+            </h3>
+            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+              View all
+            </button>
           </div>
 
           {/* Customer List */}
           <div className="space-y-4 mb-6">
             {latestCustomersData.map((customer, index) => (
-              <div key={index} className="flex items-center border-b py-2 border-gray-200 justify-between ">
+              <div
+                key={index}
+                className="flex items-center border-b py-2 border-gray-200 justify-between "
+              >
                 <div className="flex items-center mb-1 gap-3">
                   <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                     <img
@@ -1115,11 +1102,17 @@ export default function Component() {
                     />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-900">{customer.name}</div>
-                    <div className="text-xs text-gray-500">{customer.email}</div>
+                    <div className="text-sm font-medium text-gray-900">
+                      {customer.name}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {customer.email}
+                    </div>
                   </div>
                 </div>
-                <div className="text-sm font-bold text-gray-900">{customer.amount}</div>
+                <div className="text-sm font-bold text-gray-900">
+                  {customer.amount}
+                </div>
               </div>
             ))}
           </div>
@@ -1128,7 +1121,11 @@ export default function Component() {
           <div className="flex items-center justify-between pt-4 border-t border-gray-200">
             <div className="relative" ref={latestCustomersDropdownRef}>
               <button
-                onClick={() => setIsLatestCustomersDropdownOpen(!isLatestCustomersDropdownOpen)}
+                onClick={() =>
+                  setIsLatestCustomersDropdownOpen(
+                    !isLatestCustomersDropdownOpen
+                  )
+                }
                 className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
               >
                 <span className="text-sm">{latestCustomersTimeframe}</span>
@@ -1145,8 +1142,8 @@ export default function Component() {
                       key={index}
                       className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                       onClick={() => {
-                        setLatestCustomersTimeframe(option)
-                        setIsLatestCustomersDropdownOpen(false)
+                        setLatestCustomersTimeframe(option);
+                        setIsLatestCustomersDropdownOpen(false);
                       }}
                     >
                       {option}
@@ -1165,63 +1162,19 @@ export default function Component() {
         {/* Acquisition Overview Section */}
         <div className="bg-white rounded-2xl p-6 w-[761px] shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold text-gray-900">Acquisition Overview</h3>
+            <h3 className="text-xl font-semibold text-gray-900">
+              Acquisition Overview
+            </h3>
           </div>
-
-          {/* Pie Chart using Plotly */}
-          <div className="flex justify-center mb-16">
-            <div className="relative w-60 h-60">
-              {typeof window !== "undefined" && (
-                <Plot
-                  data={acquisitionPieData}
-                  layout={acquisitionPieLayout}
-                  config={{
-                    displayModeBar: false,
-                    responsive: true,
-                  }}
-                  style={{ width: "100%", height: "100%" }}
-                  useResizeHandler={true}
-                />
-              )}
-            </div>
-          </div>
-
-          {/* Channel Statistics */}
-          <div className="space-y-4 mb-6">
-            <div className="flex items-center justify-between text-xs font-medium text-gray-900 uppercase tracking-wider">
-              <span>TOP CHANNELS</span>
-              <span className="mr-64">USERS</span>
-            </div>
-            {acquisitionData.map((item, index) => (
-              <div key={index} className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: item.color }}></div>
-                  <span className="text-sm text-gray-600">{item.name}</span>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-sm font-bold mr-16 text-center text-gray-900">{item.users.toLocaleString()}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-500">{item.percentage}%</span>
-                    <div className="w-36 h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          backgroundColor: item.color,
-                          width: `${item.percentage * 1}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <PieChartComponent />
 
           {/* Bottom section with dropdown */}
           <div className="flex items-center justify-between pt-4 border-t border-gray-200">
             <div className="relative" ref={acquisitionDropdownRef}>
               <button
-                onClick={() => setIsAcquisitionDropdownOpen(!isAcquisitionDropdownOpen)}
+                onClick={() =>
+                  setIsAcquisitionDropdownOpen(!isAcquisitionDropdownOpen)
+                }
                 className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
               >
                 <span className="text-sm">{acquisitionTimeframe}</span>
@@ -1238,8 +1191,8 @@ export default function Component() {
                       key={index}
                       className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                       onClick={() => {
-                        setAcquisitionTimeframe(option)
-                        setIsAcquisitionDropdownOpen(false)
+                        setAcquisitionTimeframe(option);
+                        setIsAcquisitionDropdownOpen(false);
                       }}
                     >
                       {option}
@@ -1264,5 +1217,5 @@ export default function Component() {
         onSave={handleSaveUser}
       />
     </div>
-  )
+  );
 }
