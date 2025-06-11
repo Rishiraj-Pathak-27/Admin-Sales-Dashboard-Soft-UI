@@ -14,7 +14,6 @@ const BarChartComponent = () => {
   const [chartTimeframe, setChartTimeframe] = useState("Last 7 Days");
   const chartDropdownRef = useRef(null);
 
-
   const weeklyData = [
     { day: "01", value: 30, background: 100 },
     { day: "02", value: 45, background: 100 },
@@ -25,7 +24,6 @@ const BarChartComponent = () => {
     { day: "07", value: 40, background: 100 },
   ];
 
- 
   const timePeriodOptions = [
     "Yesterday",
     "Today",
@@ -50,7 +48,10 @@ const BarChartComponent = () => {
 
       <div className="h-96 mb-6 relative">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={weeklyData} margin={{ top: 0, right: 30, left: 20, bottom: -10 }}>
+          <BarChart
+            data={weeklyData}
+            margin={{ top: 0, right: 30, left: 20, bottom: -10 }}
+          >
             <XAxis dataKey="day" axisLine={false} tickLine={false} />
             <YAxis hide />
             <Tooltip
@@ -64,8 +65,18 @@ const BarChartComponent = () => {
               formatter={(value) => [value, "Users"]}
               labelFormatter={(label) => `${label} Feb`}
             />
-            <Bar dataKey="background" fill="#64748b" radius={[6, 6, 6, 6]} maxBarSize={18} />
-            <Bar dataKey="value" fill="#C400A3" radius={[8, 8, 8, 8]} maxBarSize={18} />
+            <Bar
+              dataKey="background"
+              fill="#64748b"
+              radius={[6, 6, 6, 6]}
+              maxBarSize={18}
+            />
+            <Bar
+              dataKey="value"
+              fill="#C400A3"
+              radius={[8, 8, 8, 8]}
+              maxBarSize={18}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

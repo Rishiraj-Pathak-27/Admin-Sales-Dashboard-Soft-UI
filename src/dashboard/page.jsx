@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import BarChartComponent from "../../Components/Bar-Chart";
-import MapChart from "../../Components/Heat-Map";
-import PieChartComponent from "../../Components/Pie-Chart";
+import BarChartComponent from "../components/Bar-Chart";
+import MapChart from "../components/Heat-Map";
+import PieChartComponent from "../components/Pie-Chart";
 
 import {
   DollarSign,
@@ -35,7 +35,7 @@ import profile7 from "@/assets/p11.png";
 import profile8 from "@/assets/p12.png";
 import profile9 from "@/assets/p13.png";
 
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+
 
 // Sales by country data with flag images
 const salesByCountryData = [
@@ -761,9 +761,11 @@ export default function Component() {
         </div>
       </div>
 
-      {/* First Row: Bar Chart and Sales by Country */}
+   
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
+
         {/*Bar Chart Section*/}
+        
         <BarChartComponent />
 
         {/* Sales by Country Section */}
@@ -1026,7 +1028,7 @@ export default function Component() {
             View website visitors by hovering over the map
           </p>
 
-          {/* Plotly Choropleth Map Container */}
+        
           <MapChart
             mapData={mapData}
             mapLayout={mapLayout}
@@ -1035,7 +1037,7 @@ export default function Component() {
             plotContainerRef={plotContainerRef}
           />
 
-          {/* Bottom section */}
+        
           <div className="flex items-center justify-between pt-4 border-t border-gray-200">
             <div className="relative" ref={sessionsDropdownRef}>
               <button
